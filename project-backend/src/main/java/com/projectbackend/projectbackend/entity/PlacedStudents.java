@@ -23,4 +23,6 @@ public class PlacedStudents {
     private String gender;
     private String branch;
     private String pictNumber;
+    private String companyName;
+    private int pkgAmt;
 }
