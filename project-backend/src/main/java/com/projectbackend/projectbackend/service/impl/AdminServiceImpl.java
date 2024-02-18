@@ -71,6 +71,12 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public PlacedStudentsDto updatePlacedStudents(PlacedStudentsDto placedStudentsDto, Long id) {
+        //to be implemented
+        return null;
+    }
+
+    @Override
     public PlacedStudentsDto updatePlacedStudents(PlacedStudentsDto placedStudentsDto, long id) {
 
         PlacedStudents p=placedRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("student","id","id"));
