@@ -40,11 +40,14 @@ public class AdminController {
         return new ResponseEntity<>(adminService.addUpcomingComp(upcomingCompDto),HttpStatus.CREATED);
     }
 
-    @PostMapping("/updatePlacedStud/{id}")
+    @PutMapping("/updatePlacedStud/{id}")
     public ResponseEntity<PlacedStudentsDto> UpdatePlacedStudents(@RequestBody PlacedStudentsDto placedStudentsDto,@PathVariable long id){
-        //to be implemented
-       return null;
+      return new ResponseEntity<>(adminService.updatePlacedStudents(placedStudentsDto, id),HttpStatus.CREATED);
+    }
 
+    @PutMapping("/updateUnPlacedStud/{id}")
+    public ResponseEntity<UnplacedStudentsDto> UpdateUnPlacedStudents(@RequestBody UnplacedStudentsDto unplacedStudentsDto,@PathVariable long id){
+        return new ResponseEntity<>(adminService.updateUnPlacedStudents(unplacedStudentsDto,id),HttpStatus.CREATED);
     }
 
 }

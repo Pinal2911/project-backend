@@ -13,8 +13,8 @@ public interface AdminService {
     CurrentCompDto addCurrentComp(CurrentCompDto currentCompDto);
     UpcomingCompDto addUpcomingComp(UpcomingCompDto upcomingCompDto);
 
-    PlacedStudentsDto updatePlacedStudents(PlacedStudentsDto placedStudentsDto,Long id);
 
+    UnplacedStudentsDto updateUnPlacedStudents(UnplacedStudentsDto unplacedStudentsDto,long id);
 
     PlacedStudentsDto updatePlacedStudents(PlacedStudentsDto placedStudentsDto, long id);
 }

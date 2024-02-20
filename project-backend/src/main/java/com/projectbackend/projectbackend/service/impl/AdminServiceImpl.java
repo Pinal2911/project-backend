@@ -71,10 +71,20 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public PlacedStudentsDto updatePlacedStudents(PlacedStudentsDto placedStudentsDto, Long id) {
-        //to be implemented
-        return null;
+    public UnplacedStudentsDto updateUnPlacedStudents(UnplacedStudentsDto unplacedStudentsDto,long id) {
+        UnplacedStudents p=unplacedRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("student","id","id"));
+        //note update this only if new dto field are not empty
+        //apply the same
+        p.setLname(unplacedStudentsDto.getLname());
+        p.setFname(unplacedStudentsDto.getFname());
+        p.setGender(unplacedStudentsDto.getGender());
+        p.setEmail(unplacedStudentsDto.getEmail());
+        p.setPictNumber(unplacedStudentsDto.getPictNumber());
+        p.setNumber(unplacedStudentsDto.getNumber());
+        UnplacedStudents updatedStud=unplacedRepository.save(p);
+        return modelMapper.map(updatedStud,UnplacedStudentsDto.class);
     }
+
 
     @Override
     public PlacedStudentsDto updatePlacedStudents(PlacedStudentsDto placedStudentsDto, long id) {
@@ -87,8 +97,8 @@ public class AdminServiceImpl implements AdminService {
         p.setEmail(placedStudentsDto.getEmail());
         p.setPictNumber(placedStudentsDto.getPictNumber());
         p.setNumber(placedStudentsDto.getNumber());
-
-        return null;
+        PlacedStudents placedStudents=placedRepository.save(p);
+        return modelMapper.map(placedStudents,PlacedStudentsDto.class);
     }
 
 
