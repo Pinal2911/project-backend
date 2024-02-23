@@ -25,4 +25,5 @@ public class PlacedStudents {
     private String pictNumber;
     private String companyName;
     private int pkgAmt;
+    private boolean ppo;
 }

@@ -2,15 +2,14 @@ package com.projectbackend.projectbackend.controller;
 
 import com.projectbackend.projectbackend.entity.CurrentCompany;
 import com.projectbackend.projectbackend.entity.UpcomingCompany;
-import com.projectbackend.projectbackend.payload.CurrentCompDto;
-import com.projectbackend.projectbackend.payload.PlacedStudentsDto;
-import com.projectbackend.projectbackend.payload.UnplacedStudentsDto;
-import com.projectbackend.projectbackend.payload.UpcomingCompDto;
+import com.projectbackend.projectbackend.payload.*;
 import com.projectbackend.projectbackend.service.AdminService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/admin/placement")
@@ -48,6 +47,33 @@ public class AdminController {
     @PutMapping("/updateUnPlacedStud/{id}")
     public ResponseEntity<UnplacedStudentsDto> UpdateUnPlacedStudents(@RequestBody UnplacedStudentsDto unplacedStudentsDto,@PathVariable long id){
         return new ResponseEntity<>(adminService.updateUnPlacedStudents(unplacedStudentsDto,id),HttpStatus.CREATED);
+    }
+
+    @PutMapping("/editStudent/{id}")
+    public ResponseEntity<String> editStudent(@RequestBody StudentRegisterDto studentRegisterDto,@PathVariable long id){
+        return new ResponseEntity<>(adminService.editStudent(studentRegisterDto,id),HttpStatus.CREATED);
+    }
+
+    @PostMapping("/addCompany")
+    public ResponseEntity<CompanyDetailsDto> addCompany(@RequestBody CompanyDetailsDto companyDetailsDto){
+        return new ResponseEntity<>(adminService.addCompany(companyDetailsDto),HttpStatus.CREATED);
+    }
+
+    @PutMapping("/editCompany/{id}")
+    public ResponseEntity<String> editCompany(@RequestBody CompanyDetailsDto companyDetailsDto,@PathVariable(name = "id") Long id){
+        return new ResponseEntity<>(adminService.updateCompanyDetails(companyDetailsDto,id),HttpStatus.CREATED);
+
+    }
+
+    @GetMapping("/ppoStudents")
+    public ResponseEntity<List<PlacedStudentsDto>> ppoStudentsList(){
+        return new ResponseEntity<>(adminService.getPPOStud(),HttpStatus.OK);
+    }
+
+    @PutMapping("/editAdmin/{id}")
+    public ResponseEntity<String> editAdmin(@RequestBody AdminRegisterDto adminRegisterDto,@PathVariable Long id){
+        return new ResponseEntity<>(adminService.updateAdmin(adminRegisterDto,id),HttpStatus.CREATED);
+
     }
 
 }

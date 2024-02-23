@@ -13,7 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="student",uniqueConstraints = {@UniqueConstraint(columnNames = {"title"})})
+@Table(name="student",uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,26 +24,26 @@ public class Student {
     private String mname;
     private String email;
     private String alterEmail;
-    private long number;
-    private long alterNumber;
+    private Long number;
+    private Long alterNumber;
     private Date dob;
     private String gender;
     private String address;
     private String permAddress;
     private String branch;
     private String division;
-    private long rollno;
+    private Long rollno;
     private String prnNumber;
     private String pictNumber;
-    private long sscPer;
+    private Long sscPer;
     private String board;
     private int sscYear;
     private int sscGap;
-    private  long hscPer;
+    private  Long hscPer;
     private String hscBoard;
     private int hscYear;
     private int hscGap;
-    private long diplomaPer;
+    private Long diplomaPer;
     private int diplomaYear;
     private int diplomaGap;
     private int mhCetPer;
@@ -57,9 +57,9 @@ public class Student {
     private int te2SGPA;
     private int backlogs;
     private boolean yd;
-    private long adhar;
+    private Long adhar;
     private String pan;
-    private long passport;
+    private Long passport;
     private String citizenship;
     private boolean higherEducation;
     private boolean amcat;
