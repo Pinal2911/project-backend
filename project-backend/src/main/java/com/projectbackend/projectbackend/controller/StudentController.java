@@ -1,17 +1,12 @@
 package com.projectbackend.projectbackend.controller;
 
 import com.projectbackend.projectbackend.entity.UnplacedStudents;
-import com.projectbackend.projectbackend.payload.CurrentCompDto;
-import com.projectbackend.projectbackend.payload.PlacedStudentsDto;
-import com.projectbackend.projectbackend.payload.UnplacedStudentsDto;
-import com.projectbackend.projectbackend.payload.UpcomingCompDto;
+import com.projectbackend.projectbackend.payload.*;
 import com.projectbackend.projectbackend.service.AdminService;
 import com.projectbackend.projectbackend.service.StudentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,8 +15,10 @@ import java.util.List;
 public class StudentController {
 
     public StudentService studentService;
-    public StudentController(StudentService studentService){
+    public AdminService adminService;
+    public StudentController(StudentService studentService,AdminService adminService){
         this.studentService=studentService;
+        this.adminService=adminService;
     }
 
     @GetMapping("/getCurrentCompany")
@@ -42,6 +39,11 @@ public class StudentController {
     @GetMapping("/getUnplacedStudents")
     public ResponseEntity<List<UnplacedStudentsDto>> getUnplaced(){
         return new ResponseEntity<>(studentService.unplacedStudents(),HttpStatus.OK);
+    }
+
+    @PutMapping("/editStudentProfile/{id}")
+    public ResponseEntity<String> editStudentProfile(@RequestBody StudentRegisterDto studentRegisterDto,@PathVariable long id){
+        return new ResponseEntity<>(adminService.editStudent(studentRegisterDto,id),HttpStatus.CREATED);
     }
 
 
