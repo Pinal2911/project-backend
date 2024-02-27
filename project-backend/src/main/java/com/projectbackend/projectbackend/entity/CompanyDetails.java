@@ -17,8 +17,10 @@ public class CompanyDetails {
     private Long id;
     private String name;
     private Long packageAmt;
+    //note->eligible and criteria both are same
     private String eligible;
     private Long rounds;
+    private String process;
 
 
 

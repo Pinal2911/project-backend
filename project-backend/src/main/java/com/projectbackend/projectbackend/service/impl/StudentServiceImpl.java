@@ -83,4 +83,16 @@ public class StudentServiceImpl implements StudentService {
         }
         return unplacedStudentsDtos;
     }
+
+    @Override
+    public List<UpcomingCompDto> onBoardApply() {
+        List<UpcomingCompDto> upcomingCompApply=new ArrayList<>();
+        Iterable<UpcomingCompany> upcomingCompanies=upcomingCompRepository.findAll();
+        for(UpcomingCompany upcomingCompany:upcomingCompanies){
+            if(upcomingCompany.isOnBoard()){
+                upcomingCompApply.add(modelMapper.map(upcomingCompany, UpcomingCompDto.class));
+            }
+        }
+        return upcomingCompApply;
+    }
 }

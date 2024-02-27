@@ -4,6 +4,8 @@ import com.projectbackend.projectbackend.entity.CurrentCompany;
 import com.projectbackend.projectbackend.entity.UpcomingCompany;
 import com.projectbackend.projectbackend.payload.*;
 import com.projectbackend.projectbackend.service.AdminService;
+import com.projectbackend.projectbackend.service.CompanyService;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -15,8 +17,10 @@ import java.util.List;
 @RequestMapping("/api/admin/placement")
 public class AdminController {
     private AdminService adminService;
-    public AdminController(AdminService adminService){
+    private CompanyService companyService;
+    public AdminController(AdminService adminService,CompanyService companyService){
         this.adminService=adminService;
+        this.companyService=companyService;
     }
 
     @PostMapping("/addPlacedStud")
@@ -74,6 +78,16 @@ public class AdminController {
     public ResponseEntity<String> editAdmin(@RequestBody AdminRegisterDto adminRegisterDto,@PathVariable Long id){
         return new ResponseEntity<>(adminService.updateAdmin(adminRegisterDto,id),HttpStatus.CREATED);
 
+    }
+
+    @PostMapping("/addNotification")
+    public ResponseEntity<NotificationDto> addNotification(@RequestBody NotificationDto notificationDto){
+        return new ResponseEntity<>(companyService.addNotification(notificationDto),HttpStatus.CREATED);
+    }
+
+    @PutMapping("/editNotification/{id}")
+    public ResponseEntity<NotificationDto> editNotification(@RequestBody NotificationDto notify,@PathVariable Long id){
+        return new ResponseEntity<>(companyService.updateNotification(notify,id),HttpStatus.OK);
     }
 
 }

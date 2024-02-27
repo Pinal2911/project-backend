@@ -1,6 +1,5 @@
 package com.projectbackend.projectbackend.service;
 
-import com.projectbackend.projectbackend.entity.CompanyDetails;
 import com.projectbackend.projectbackend.payload.*;
 
 import java.util.List;
@@ -26,4 +25,6 @@ public interface AdminService {
     String updateCompanyDetails(CompanyDetailsDto companyDetailsDto,Long id);
 
     List<PlacedStudentsDto> getPPOStud();
+
+
 }

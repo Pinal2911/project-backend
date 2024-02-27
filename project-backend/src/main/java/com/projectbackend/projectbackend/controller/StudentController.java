@@ -46,5 +46,9 @@ public class StudentController {
         return new ResponseEntity<>(adminService.editStudent(studentRegisterDto,id),HttpStatus.CREATED);
     }
 
+    @GetMapping("/onboard")
+    public ResponseEntity<List<UpcomingCompDto>> applyCompany(){
+        return new ResponseEntity<>(studentService.onBoardApply(),HttpStatus.OK);
+    }
 
 }

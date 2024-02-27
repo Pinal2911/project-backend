@@ -9,11 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CompanyDetailsDto {
+public class NotificationDto {
     private Long id;
-    private String name;
-    private Long packageAmt;
-    private String eligible;
-    private Long rounds;
-    private String process;
+    private String notify;
 }

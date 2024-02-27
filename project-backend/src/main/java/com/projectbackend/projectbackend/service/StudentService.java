@@ -13,6 +13,7 @@ public interface StudentService {
     List<UpcomingCompDto> upComingComp();
     List<PlacedStudentsDto> placedStudents();
     List<UnplacedStudentsDto> unplacedStudents();
+    List<UpcomingCompDto> onBoardApply();
 
 }
 

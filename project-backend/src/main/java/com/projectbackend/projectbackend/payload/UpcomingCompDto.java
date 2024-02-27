@@ -11,4 +11,5 @@ public class UpcomingCompDto {
     private Long id;
     private String companyName;
     private int packageAmt;
+    private boolean onBoard;
 }
