@@ -1,10 +1,12 @@
 package com.projectbackend.projectbackend.entity;
 
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 
 @Getter
 @Setter
@@ -18,3 +20,6 @@ public class Roles {
     private Long id;
     private String name;
 }
+
+
+
