@@ -7,10 +7,11 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 import java.util.stream.Collectors;
-
+@Service
 public class CustomStudentDetailsService implements UserDetailsService {
 
     private StudentRepository studentRepository;
@@ -22,7 +23,7 @@ public class CustomStudentDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Student student=studentRepository.findByUsernameOrEmail(username,username)
+        Student student=studentRepository.findByFnameOrEmail(username,username)
                 .orElseThrow(()-> new UsernameNotFoundException("student not found with username or email"+username));
 
         Set<GrantedAuthority> authorities=student.getRoles()

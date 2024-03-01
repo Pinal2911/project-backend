@@ -10,6 +10,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class StudentRegisterDto {
     private String fname;
+    private String password;
     private String lname;
     private String mname;
     private String email;
