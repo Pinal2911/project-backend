@@ -4,6 +4,7 @@ import com.projectbackend.projectbackend.payload.JWTAuthResponse;
 import com.projectbackend.projectbackend.payload.StudentLoginDto;
 import com.projectbackend.projectbackend.payload.StudentRegisterDto;
 import com.projectbackend.projectbackend.service.AuthService;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,13 +17,18 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private AuthService authService;
-    public AuthController(AuthService authService){
+    private ModelMapper modelMapper;
+    public AuthController(AuthService authService,ModelMapper modelMapper){
         this.authService=authService;
+        this.modelMapper=modelMapper;
     }
 
     @PostMapping(value = {"/student/login","/student/signin"})
     public ResponseEntity<JWTAuthResponse> login(@RequestBody StudentLoginDto studentLoginDto){
+        System.out.println(studentLoginDto.getPassword());
+        System.out.println(studentLoginDto.getFname());
         String token=authService.login(studentLoginDto);
+        System.out.println(token);
         JWTAuthResponse jwtAuthResponse=new JWTAuthResponse();
         jwtAuthResponse.setAccessToken(token);
         return ResponseEntity.ok(jwtAuthResponse);

@@ -39,10 +39,11 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public String login(StudentLoginDto studentLoginDto) {
-        Authentication authentication=authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(studentLoginDto.getEmail(),studentLoginDto.getPassword()));
+        Authentication authentication=authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(studentLoginDto.getFname(),studentLoginDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String token=jwtTokenProvider.generateToken(authentication);
+        System.out.println(token);
         return token;
     }
 
