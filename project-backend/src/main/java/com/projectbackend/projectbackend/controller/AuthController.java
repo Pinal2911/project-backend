@@ -42,8 +42,7 @@ public class AuthController {
 
     @PostMapping(value = {"/admin/login","/admin/signin"})
     public ResponseEntity<JWTAuthResponse> adminLogin(@RequestBody AdminLoginDto adminLoginDto){
-        System.out.println(adminLoginDto.getPassword());
-        System.out.println(adminLoginDto.getName());
+
         String token=authService.adminLogin(adminLoginDto);
         System.out.println(token);
         JWTAuthResponse jwtAuthResponse=new JWTAuthResponse();

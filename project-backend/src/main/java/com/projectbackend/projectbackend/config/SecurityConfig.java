@@ -19,7 +19,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+
 public class SecurityConfig {
 
 
@@ -50,6 +50,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorize)->
                         authorize.requestMatchers(HttpMethod.GET,"/api/**").permitAll()
                                 .requestMatchers("/api/placement/auth/**").permitAll()
+
                                 .anyRequest()
                                 .authenticated()
                 ).httpBasic(Customizer.withDefaults()).exceptionHandling(exception->exception.authenticationEntryPoint(jwtAuthenticationEntryPoint)

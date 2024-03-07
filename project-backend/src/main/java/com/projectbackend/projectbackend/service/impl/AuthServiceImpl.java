@@ -83,7 +83,11 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public String adminLogin(AdminLoginDto adminLoginDto) {
-        Authentication authentication=authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(adminLoginDto.getName(),adminLoginDto.getPassword()));
+
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(adminLoginDto.getName(), adminLoginDto.getPassword()));
+
+        //verification purpose only remove later
+        System.out.println(authentication);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String token=jwtTokenProvider.generateToken(authentication);

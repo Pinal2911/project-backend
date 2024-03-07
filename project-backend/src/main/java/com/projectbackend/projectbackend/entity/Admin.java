@@ -16,7 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(
-        name="admin",uniqueConstraints = {@UniqueConstraint(columnNames = {"title"})}
+        name="admin",uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})}
 )
 public class Admin {
     @Id
