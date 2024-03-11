@@ -22,16 +22,16 @@ public class AuthController {
         this.modelMapper=modelMapper;
     }
 
-    @PostMapping(value = {"/student/login","/student/signin"})
-    public ResponseEntity<JWTAuthResponse> login(@RequestBody StudentLoginDto studentLoginDto){
-        System.out.println(studentLoginDto.getPassword());
-        System.out.println(studentLoginDto.getFname());
-        String token=authService.login(studentLoginDto);
+    @PostMapping(value = {"/user/login"})
+    public ResponseEntity<JWTAuthResponse> userLogin(@RequestBody UserLoginDto userLoginDto){
+        String token=authService.userLogin(userLoginDto);
         System.out.println(token);
         JWTAuthResponse jwtAuthResponse=new JWTAuthResponse();
         jwtAuthResponse.setAccessToken(token);
         return ResponseEntity.ok(jwtAuthResponse);
     }
+
+
 
     @PostMapping(value = {"/student/register","/student/signup"})
     public ResponseEntity<String> register(@RequestBody StudentRegisterDto studentRegisterDto){
@@ -40,15 +40,7 @@ public class AuthController {
     }
 
 
-    @PostMapping(value = {"/admin/login","/admin/signin"})
-    public ResponseEntity<JWTAuthResponse> adminLogin(@RequestBody AdminLoginDto adminLoginDto){
 
-        String token=authService.adminLogin(adminLoginDto);
-        System.out.println(token);
-        JWTAuthResponse jwtAuthResponse=new JWTAuthResponse();
-        jwtAuthResponse.setAccessToken(token);
-        return ResponseEntity.ok(jwtAuthResponse);
-    }
 
     @PostMapping(value = {"/admin/register","/admin/signup"})
     public ResponseEntity<String> adminRegister(@RequestBody AdminRegisterDto adminRegisterDto){
@@ -57,16 +49,7 @@ public class AuthController {
     }
 
 
-    @PostMapping(value = {"/company/login","/company/signin"})
-    public ResponseEntity<JWTAuthResponse> companyLogin(@RequestBody CompanyLoginDto companyLoginDto){
-        System.out.println(companyLoginDto.getPassword());
-        System.out.println(companyLoginDto.getName());
-        String token=authService.companyLogin(companyLoginDto);
-        System.out.println(token);
-        JWTAuthResponse jwtAuthResponse=new JWTAuthResponse();
-        jwtAuthResponse.setAccessToken(token);
-        return ResponseEntity.ok(jwtAuthResponse);
-    }
+
 
     @PostMapping(value = {"/company/register","/company/signup"})
     public ResponseEntity<String> companyRegister(@RequestBody CompanyRegisterDto companyRegisterDto){

@@ -1,14 +1,8 @@
 package com.projectbackend.projectbackend.service.impl;
-import com.projectbackend.projectbackend.entity.Admin;
-import com.projectbackend.projectbackend.entity.Company;
-import com.projectbackend.projectbackend.entity.Roles;
-import com.projectbackend.projectbackend.entity.Student;
+import com.projectbackend.projectbackend.entity.*;
 import com.projectbackend.projectbackend.exception.TnpApiException;
 import com.projectbackend.projectbackend.payload.*;
-import com.projectbackend.projectbackend.repository.AdminRepository;
-import com.projectbackend.projectbackend.repository.CompanyRepository;
-import com.projectbackend.projectbackend.repository.RoleRepository;
-import com.projectbackend.projectbackend.repository.StudentRepository;
+import com.projectbackend.projectbackend.repository.*;
 import com.projectbackend.projectbackend.security.JWTTokenProvider;
 import com.projectbackend.projectbackend.service.AuthService;
 import org.springframework.http.HttpStatus;
@@ -32,9 +26,11 @@ public class AuthServiceImpl implements AuthService {
     private AdminRepository adminRepository;
     private CompanyRepository companyRepository;
 
+    private UserRepository userRepository;
     public AuthServiceImpl(AuthenticationManager authenticationManager, StudentRepository studentRepository, PasswordEncoder passwordEncoder, RoleRepository roleRepository, JWTTokenProvider jwtTokenProvider
     ,AdminRepository adminRepository,
-                           CompanyRepository companyRepository) {
+                           CompanyRepository companyRepository,
+                           UserRepository userRepository) {
         this.authenticationManager = authenticationManager;
         this.studentRepository = studentRepository;
         this.passwordEncoder = passwordEncoder;
@@ -42,17 +38,10 @@ public class AuthServiceImpl implements AuthService {
         this.jwtTokenProvider = jwtTokenProvider;
         this.adminRepository=adminRepository;
         this.companyRepository=companyRepository;
+        this.userRepository=userRepository;
     }
 
-    @Override
-    public String login(StudentLoginDto studentLoginDto) {
-        Authentication authentication=authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(studentLoginDto.getFname(),studentLoginDto.getPassword()));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        String token=jwtTokenProvider.generateToken(authentication);
-        System.out.println(token);
-        return token;
-    }
 
     @Override
     public String register(StudentRegisterDto studentRegisterDto) {
@@ -70,30 +59,21 @@ public class AuthServiceImpl implements AuthService {
         student.setFname(studentRegisterDto.getFname());
         student.setEmail(studentRegisterDto.getEmail());
         student.setPassword(passwordEncoder.encode(studentRegisterDto.getPassword()));
-        
+        User user=new User();
+        user.setUsername(studentRegisterDto.getFname());
+        user.setPassword(passwordEncoder.encode(studentRegisterDto.getPassword()));
+        user.setEmail(studentRegisterDto.getEmail());
 
         Set<Roles> roles= new HashSet<>();
         Roles userRole=roleRepository.findByName("ROLE_USER").get();
         roles.add(userRole);
-        student.setRoles(roles);
-
+    user.setRoles(roles);
+        userRepository.save(user);
         studentRepository.save(student);
         return "student registered successfully";
     }
 
-    @Override
-    public String adminLogin(AdminLoginDto adminLoginDto) {
 
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(adminLoginDto.getName(), adminLoginDto.getPassword()));
-
-        //verification purpose only remove later
-        System.out.println(authentication);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        String token=jwtTokenProvider.generateToken(authentication);
-        System.out.println(token);
-        return token;
-    }
 
     @Override
     public String adminRegister(AdminRegisterDto adminRegisterDto) {
@@ -106,6 +86,10 @@ public class AuthServiceImpl implements AuthService {
             throw new TnpApiException(HttpStatus.BAD_REQUEST,"email already exists");
         }
 
+        User user=new User();
+        user.setUsername(adminRegisterDto.getName());
+        user.setPassword(passwordEncoder.encode(adminRegisterDto.getPassword()));
+        user.setEmail(adminRegisterDto.getEmail());
         //or else ass user in db
         Admin admin=new Admin();
         admin.setName(adminRegisterDto.getName());
@@ -115,23 +99,17 @@ public class AuthServiceImpl implements AuthService {
 
         Set<Roles> roles= new HashSet<>();
         Roles userRole=roleRepository.findByName("ROLE_ADMIN").get();
+        user.setRoles(roles);
         roles.add(userRole);
-        admin.setRoles(roles);
 
+
+        userRepository.save(user);
         adminRepository.save(admin);
+
         return "admin registered successfully";
     }
 
-    @Override
-    public String companyLogin(CompanyLoginDto companyLoginDto) {
-        Authentication authentication=authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(companyLoginDto.getName(),companyLoginDto.getPassword()));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        String token=jwtTokenProvider.generateToken(authentication);
-        System.out.println(token);
-        return token;
-
-    }
 
     @Override
     public String companyRegister(CompanyRegisterDto companyRegisterDto) {
@@ -150,15 +128,30 @@ public class AuthServiceImpl implements AuthService {
         company.setEmail(companyRegisterDto.getEmail());
         company.setPassword(passwordEncoder.encode(companyRegisterDto.getPassword()));
 
+        User user=new User();
+        user.setUsername(companyRegisterDto.getName());
+        user.setPassword(passwordEncoder.encode(companyRegisterDto.getPassword()));
+        user.setEmail(companyRegisterDto.getEmail());
 
         Set<Roles> roles= new HashSet<>();
         Roles userRole=roleRepository.findByName("ROLE_COMPANY").get();
         roles.add(userRole);
-        company.setRoles(roles);
+        user.setRoles(roles);
 
+        userRepository.save(user);
         companyRepository.save(company);
         return "company registered successfully";
 
+    }
+
+    @Override
+    public String userLogin(UserLoginDto userLoginDto) {
+        Authentication authentication=authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userLoginDto.getUsernameOrEmail(),userLoginDto.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        String token=jwtTokenProvider.generateToken(authentication);
+        System.out.println(token);
+        return token;
     }
 }
 

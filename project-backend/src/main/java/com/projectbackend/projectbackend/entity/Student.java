@@ -18,7 +18,7 @@ import java.util.Set;
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
     private String password;
     private String fname;
     private String lname;
@@ -64,11 +64,5 @@ public class Student {
     private String citizenship;
     private boolean higherEducation;
     private boolean amcat;
-
-    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinTable(name="users_roles",
-    joinColumns = @JoinColumn(name = "user_id",referencedColumnName = "id"),
-    inverseJoinColumns =@JoinColumn(name = "role_id",referencedColumnName = "id"))
-    private Set<Roles> roles;
 
 }

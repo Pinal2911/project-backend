@@ -7,6 +7,7 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Value;
@@ -52,6 +53,13 @@ public class JWTTokenProvider {
                 .parseSignedClaims(token)
                 .getPayload()
                 .getSubject();
+
+    }
+
+    public String getRole(HttpServletRequest request){
+        StringBuffer url = request.getRequestURL();
+        String queryString = request.getQueryString();
+        return url.toString();
 
     }
 
