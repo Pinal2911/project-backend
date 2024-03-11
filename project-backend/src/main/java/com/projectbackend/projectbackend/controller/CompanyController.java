@@ -10,20 +10,24 @@ import com.projectbackend.projectbackend.service.AdminService;
 import com.projectbackend.projectbackend.service.CompanyService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+
 @RequestMapping("/api/company/placement")
 public class CompanyController {
 
     private AdminService adminService;
     private CompanyService companyService;
-    private CompanyController(AdminService adminService,CompanyService companyService){
+    public CompanyController(AdminService adminService,CompanyService companyService){
         this.companyService=companyService;
         this.adminService=adminService;
     }
+
+
 
     @PutMapping("/editCompany/{id}")
 
@@ -32,11 +36,13 @@ public class CompanyController {
 
     }
 
+    @PreAuthorize("hasRole('ROLE_COMPANY')")
     @PutMapping("/editProcess/{id}")
     public ResponseEntity<String> editProcess(@RequestBody CompanyDetailsDto process, @PathVariable Long id){
         return new ResponseEntity<>(companyService.editProcess(process,id),HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_COMPANY')")
     @PutMapping("/editProfile/{id}")
     public ResponseEntity<String> editProfile(@RequestBody Company company,@PathVariable Long id){
         return new ResponseEntity<>(companyService.editProfile(company,id),HttpStatus.OK);
@@ -51,6 +57,8 @@ public class CompanyController {
     public ResponseEntity<NotificationDto> editNotification(@RequestBody NotificationDto notify,@PathVariable Long id){
         return new ResponseEntity<>(companyService.updateNotification(notify,id),HttpStatus.OK);
     }
+
+    @PreAuthorize("hasRole('ROLE_COMPANY')")
 
     @GetMapping("/ppo/{companyName}")
     public ResponseEntity<List<PlacedStudentsDto>> getPPOList(@PathVariable String companyName){
