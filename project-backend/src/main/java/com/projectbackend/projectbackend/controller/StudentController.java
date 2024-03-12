@@ -51,7 +51,6 @@ public class StudentController {
     public ResponseEntity<String> editStudentProfile(@RequestBody StudentRegisterDto studentRegisterDto,@PathVariable long id){
         return new ResponseEntity<>(adminService.editStudent(studentRegisterDto,id),HttpStatus.CREATED);
     }
-
     @PreAuthorize("hasRole('ROLE_STUDENT')")
     @GetMapping("/onboard")
     public ResponseEntity<List<UpcomingCompDto>> applyCompany(){
