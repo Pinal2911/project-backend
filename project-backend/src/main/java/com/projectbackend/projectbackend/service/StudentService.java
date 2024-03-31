@@ -1,9 +1,6 @@
 package com.projectbackend.projectbackend.service;
 
-import com.projectbackend.projectbackend.payload.CurrentCompDto;
-import com.projectbackend.projectbackend.payload.PlacedStudentsDto;
-import com.projectbackend.projectbackend.payload.UnplacedStudentsDto;
-import com.projectbackend.projectbackend.payload.UpcomingCompDto;
+import com.projectbackend.projectbackend.payload.*;
 
 import java.util.List;
 
@@ -14,6 +11,7 @@ public interface StudentService {
     List<PlacedStudentsDto> placedStudents();
     List<UnplacedStudentsDto> unplacedStudents();
     List<UpcomingCompDto> onBoardApply();
+    List<RoundDetailsDto> getRoundDetails();
 
 }
 

@@ -1,9 +1,11 @@
 package com.projectbackend.projectbackend.controller;
 
+import com.projectbackend.projectbackend.entity.RoundDetails;
 import com.projectbackend.projectbackend.entity.UnplacedStudents;
 import com.projectbackend.projectbackend.payload.*;
 import com.projectbackend.projectbackend.service.AdminService;
 import com.projectbackend.projectbackend.service.StudentService;
+import org.springframework.boot.util.LambdaSafe;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -56,6 +58,11 @@ public class StudentController {
     @GetMapping("/onboard")
     public ResponseEntity<List<UpcomingCompDto>> applyCompany(){
         return new ResponseEntity<>(studentService.onBoardApply(),HttpStatus.OK);
+    }
+
+    @GetMapping("/getRoundDetails")
+    public ResponseEntity<List<RoundDetailsDto>> getRoundDetails(){
+        return new ResponseEntity<>(studentService.getRoundDetails(),HttpStatus.OK);
     }
 
 }

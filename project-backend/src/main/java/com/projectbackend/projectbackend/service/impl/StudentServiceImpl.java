@@ -1,17 +1,8 @@
 package com.projectbackend.projectbackend.service.impl;
 
-import com.projectbackend.projectbackend.entity.CurrentCompany;
-import com.projectbackend.projectbackend.entity.PlacedStudents;
-import com.projectbackend.projectbackend.entity.UnplacedStudents;
-import com.projectbackend.projectbackend.entity.UpcomingCompany;
-import com.projectbackend.projectbackend.payload.CurrentCompDto;
-import com.projectbackend.projectbackend.payload.PlacedStudentsDto;
-import com.projectbackend.projectbackend.payload.UnplacedStudentsDto;
-import com.projectbackend.projectbackend.payload.UpcomingCompDto;
-import com.projectbackend.projectbackend.repository.CurrentCompReposiotry;
-import com.projectbackend.projectbackend.repository.PlacedRepository;
-import com.projectbackend.projectbackend.repository.UnplacedRepository;
-import com.projectbackend.projectbackend.repository.UpcomingCompRepository;
+import com.projectbackend.projectbackend.entity.*;
+import com.projectbackend.projectbackend.payload.*;
+import com.projectbackend.projectbackend.repository.*;
 import com.projectbackend.projectbackend.service.StudentService;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.Banner;
@@ -27,18 +18,21 @@ public class StudentServiceImpl implements StudentService {
     UpcomingCompRepository upcomingCompRepository;
     PlacedRepository placedRepository;
     UnplacedRepository unplacedRepository;
+    RoundDetailsRepository roundDetailsRepository;
     ModelMapper modelMapper;
 
     public StudentServiceImpl(CurrentCompReposiotry currentCompReposiotry,
                               ModelMapper modelMapper,
                               UpcomingCompRepository upcomingCompRepository,
                               PlacedRepository placedRepository,
-                              UnplacedRepository unplacedRepository) {
+                              UnplacedRepository unplacedRepository,
+                              RoundDetailsRepository roundDetailsRepository) {
         this.currentCompReposiotry = currentCompReposiotry;
         this.modelMapper=modelMapper;
         this.upcomingCompRepository=upcomingCompRepository;
         this.placedRepository=placedRepository;
         this.unplacedRepository=unplacedRepository;
+        this.roundDetailsRepository=roundDetailsRepository;
     }
 
     @Override
@@ -94,5 +88,15 @@ public class StudentServiceImpl implements StudentService {
             }
         }
         return upcomingCompApply;
+    }
+
+    @Override
+    public List<RoundDetailsDto> getRoundDetails() {
+        List<RoundDetailsDto> roundDetailsDtos=new ArrayList<>();
+        Iterable<RoundDetails> roundDetails=roundDetailsRepository.findAll();
+        for(RoundDetails roundDetails1:roundDetails){
+            roundDetailsDtos.add(modelMapper.map(roundDetails1,RoundDetailsDto.class));
+        }
+        return roundDetailsDtos;
     }
 }

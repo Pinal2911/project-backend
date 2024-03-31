@@ -1,6 +1,5 @@
-package com.projectbackend.projectbackend.entity;
+package com.projectbackend.projectbackend.payload;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,11 +9,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name="roundDetails")
-public class RoundDetails {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+public class RoundDetailsDto {
     private Long id;
     private String companyName;
     private Long pkgAmt;
