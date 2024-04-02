@@ -12,6 +12,7 @@ public interface StudentService {
     List<UnplacedStudentsDto> unplacedStudents();
     List<UpcomingCompDto> onBoardApply();
     List<RoundDetailsDto> getRoundDetails();
+    List<StudentRegisterDto> getStudentByID(Long id);
 
 }
 

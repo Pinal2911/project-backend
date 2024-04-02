@@ -17,7 +17,7 @@ public interface AdminService {
 
     PlacedStudentsDto updatePlacedStudents(PlacedStudentsDto placedStudentsDto, long id);
 
-    String editStudent(StudentRegisterDto studentRegisterDto,long id);
+    StudentRegisterDto editStudent(StudentRegisterDto studentRegisterDto,long id);
 
     String updateAdmin(AdminRegisterDto adminRegisterDto,long id);
     CompanyDetailsDto addCompany(CompanyDetailsDto companyDetailsDto);

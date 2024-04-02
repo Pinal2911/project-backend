@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/admin/placement")
 public class AdminController {
     private AdminService adminService;
@@ -49,7 +49,7 @@ public class AdminController {
         return new ResponseEntity<>(adminService.addUpcomingComp(upcomingCompDto),HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+  //  @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/updatePlacedStud/{id}")
     public ResponseEntity<PlacedStudentsDto> UpdatePlacedStudents(@RequestBody PlacedStudentsDto placedStudentsDto,@PathVariable long id){
       return new ResponseEntity<>(adminService.updatePlacedStudents(placedStudentsDto, id),HttpStatus.CREATED);
@@ -63,7 +63,7 @@ public class AdminController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/editStudent/{id}")
-    public ResponseEntity<String> editStudent(@RequestBody StudentRegisterDto studentRegisterDto,@PathVariable long id){
+    public ResponseEntity<StudentRegisterDto> editStudent(@RequestBody StudentRegisterDto studentRegisterDto,@PathVariable long id){
         return new ResponseEntity<>(adminService.editStudent(studentRegisterDto,id),HttpStatus.CREATED);
     }
 

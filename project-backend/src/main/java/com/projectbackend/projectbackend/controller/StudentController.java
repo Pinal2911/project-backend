@@ -50,8 +50,9 @@ public class StudentController {
         return new ResponseEntity<>(studentService.unplacedStudents(),HttpStatus.OK);
     }
 
+
     @PutMapping("/editStudentProfile/{id}")
-    public ResponseEntity<String> editStudentProfile(@RequestBody StudentRegisterDto studentRegisterDto,@PathVariable long id){
+    public ResponseEntity<StudentRegisterDto> editStudentProfile(@RequestBody StudentRegisterDto studentRegisterDto,@PathVariable long id){
         return new ResponseEntity<>(adminService.editStudent(studentRegisterDto,id),HttpStatus.CREATED);
     }
     //@PreAuthorize("hasRole('ROLE_STUDENT')")

@@ -64,6 +64,9 @@ public class AdminServiceImpl implements AdminService {
         CurrentCompany newComp=currentCompReposiotry.save(currentCompany);
         CurrentCompDto addedComp=modelMapper.map(newComp, CurrentCompDto.class);
         return addedComp;
+
+
+
     }
 
     @Override
@@ -132,9 +135,10 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public String editStudent(StudentRegisterDto studentRegisterDto, long id) {
+    public StudentRegisterDto editStudent(StudentRegisterDto studentRegisterDto, long id) {
         Student s=studentRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("student","id","id"));
         if(studentRegisterDto.getFname()!=null){
+            System.out.println(studentRegisterDto.getFname());
             s.setFname(studentRegisterDto.getFname());
         }
         if(studentRegisterDto.getLname()!=null){
@@ -144,7 +148,7 @@ public class AdminServiceImpl implements AdminService {
             s.setMname(studentRegisterDto.getMname());
         }
         if(studentRegisterDto.getEmail()!=null){
-            s.setFname(studentRegisterDto.getEmail());
+            s.setEmail(studentRegisterDto.getEmail());
         }
         if(studentRegisterDto.getAlterEmail()!=null){
             s.setFname(studentRegisterDto.getAlterEmail());
@@ -197,13 +201,13 @@ public class AdminServiceImpl implements AdminService {
         if(studentRegisterDto.getHscGap() !=0){
             s.setHscGap(studentRegisterDto.getHscGap());
         }
-        if(studentRegisterDto.getHscPer() !=0){
+        if(studentRegisterDto.getHscPer() !=null){
             s.setHscPer(studentRegisterDto.getHscPer());
         }
         if(studentRegisterDto.getHscGap() !=0){
             s.setHscGap(studentRegisterDto.getHscGap());
         }
-        if(studentRegisterDto.getDiplomaPer() !=0){
+        if(studentRegisterDto.getDiplomaPer() !=null){
             s.setDiplomaPer(studentRegisterDto.getDiplomaPer());
         }
         if(studentRegisterDto.getDiplomaYear() !=0){
@@ -266,7 +270,8 @@ public class AdminServiceImpl implements AdminService {
         }
 
         Student editStud=studentRepository.save(s);
-        return "student edited successfully";
+
+        return modelMapper.map(editStud,StudentRegisterDto.class);
     }
 
     @Override

@@ -99,4 +99,9 @@ public class StudentServiceImpl implements StudentService {
         }
         return roundDetailsDtos;
     }
+
+    @Override
+    public List<StudentRegisterDto> getStudentByID(Long id) {
+        return null;
+    }
 }
