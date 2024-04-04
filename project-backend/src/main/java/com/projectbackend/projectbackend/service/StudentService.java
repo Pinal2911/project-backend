@@ -14,6 +14,8 @@ public interface StudentService {
     List<RoundDetailsDto> getRoundDetails();
     List<StudentRegisterDto> getStudentByID(Long id);
 
+    List<NotificationDto> getNotifications();
+
 }
 
 

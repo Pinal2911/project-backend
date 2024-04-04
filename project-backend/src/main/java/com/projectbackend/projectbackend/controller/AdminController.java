@@ -5,6 +5,7 @@ import com.projectbackend.projectbackend.entity.UpcomingCompany;
 import com.projectbackend.projectbackend.payload.*;
 import com.projectbackend.projectbackend.service.AdminService;
 import com.projectbackend.projectbackend.service.CompanyService;
+import com.projectbackend.projectbackend.service.StudentService;
 import org.aspectj.weaver.ast.Not;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,35 +16,37 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+
 @RequestMapping("/api/admin/placement")
 public class AdminController {
     private AdminService adminService;
     private CompanyService companyService;
-    public AdminController(AdminService adminService,CompanyService companyService){
+    private StudentService studentService;
+    public AdminController(AdminService adminService,CompanyService companyService,StudentService studentService){
         this.adminService=adminService;
+        this.studentService=studentService;
         this.companyService=companyService;
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+  //  @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/addPlacedStud")
     public ResponseEntity<PlacedStudentsDto> addPlacedStudent(@RequestBody PlacedStudentsDto placedStudentsDto){
         return new ResponseEntity<>(adminService.addPlacedStudents(placedStudentsDto), HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+  //  @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/unPlacedStud")
     public ResponseEntity<UnplacedStudentsDto> unPlacedStudent(@RequestBody UnplacedStudentsDto unplacedStudentsDto){
         return new ResponseEntity<>(adminService.addUnplacedStudents(unplacedStudentsDto),HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    //@PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/currentComp")
     public ResponseEntity<CurrentCompDto> CurrentComp(@RequestBody CurrentCompDto currentCompDto){
         return new ResponseEntity<>(adminService.addCurrentComp(currentCompDto),HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+   // @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/upcomingComp")
     public ResponseEntity<UpcomingCompDto> UpcomingComp(@RequestBody UpcomingCompDto upcomingCompDto){
         return new ResponseEntity<>(adminService.addUpcomingComp(upcomingCompDto),HttpStatus.CREATED);
@@ -55,38 +58,38 @@ public class AdminController {
       return new ResponseEntity<>(adminService.updatePlacedStudents(placedStudentsDto, id),HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+   // @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/updateUnPlacedStud/{id}")
     public ResponseEntity<UnplacedStudentsDto> UpdateUnPlacedStudents(@RequestBody UnplacedStudentsDto unplacedStudentsDto,@PathVariable long id){
         return new ResponseEntity<>(adminService.updateUnPlacedStudents(unplacedStudentsDto,id),HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+   // @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/editStudent/{id}")
     public ResponseEntity<StudentRegisterDto> editStudent(@RequestBody StudentRegisterDto studentRegisterDto,@PathVariable long id){
         return new ResponseEntity<>(adminService.editStudent(studentRegisterDto,id),HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+  //  @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/addCompany")
     public ResponseEntity<CompanyDetailsDto> addCompany(@RequestBody CompanyDetailsDto companyDetailsDto){
         return new ResponseEntity<>(adminService.addCompany(companyDetailsDto),HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+  //  @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/editCompany/{id}")
     public ResponseEntity<String> editCompany(@RequestBody CompanyDetailsDto companyDetailsDto,@PathVariable(name = "id") Long id){
         return new ResponseEntity<>(adminService.updateCompanyDetails(companyDetailsDto,id),HttpStatus.CREATED);
 
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+   // @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/ppoStudents")
     public ResponseEntity<List<PlacedStudentsDto>> ppoStudentsList(){
         return new ResponseEntity<>(adminService.getPPOStud(),HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+   // @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/editAdmin/{id}")
     public ResponseEntity<String> editAdmin(@RequestBody AdminRegisterDto adminRegisterDto,@PathVariable Long id){
         return new ResponseEntity<>(adminService.updateAdmin(adminRegisterDto,id),HttpStatus.CREATED);
@@ -100,10 +103,13 @@ public class AdminController {
     }
 
 
-
     @PutMapping("/editNotification/{id}")
     public ResponseEntity<NotificationDto> editNotification(@RequestBody NotificationDto notify,@PathVariable Long id){
         return new ResponseEntity<>(companyService.updateNotification(notify,id),HttpStatus.OK);
     }
 
+    @GetMapping("/listofcompanies")
+    public ResponseEntity<List<CurrentCompDto>> getListofCompany(){
+        return new ResponseEntity<>(studentService.currentComp(), HttpStatus.OK);
+    }
 }

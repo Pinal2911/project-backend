@@ -36,13 +36,13 @@ public class CompanyController {
 
     }
 
-    @PreAuthorize("hasRole('ROLE_COMPANY')")
+   // @PreAuthorize("hasRole('ROLE_COMPANY')")
     @PutMapping("/editProcess/{id}")
     public ResponseEntity<String> editProcess(@RequestBody CompanyDetailsDto process, @PathVariable Long id){
         return new ResponseEntity<>(companyService.editProcess(process,id),HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ROLE_COMPANY')")
+   // @PreAuthorize("hasRole('ROLE_COMPANY')")
     @PutMapping("/editProfile/{id}")
     public ResponseEntity<String> editProfile(@RequestBody Company company,@PathVariable Long id){
         return new ResponseEntity<>(companyService.editProfile(company,id),HttpStatus.OK);
@@ -58,7 +58,7 @@ public class CompanyController {
         return new ResponseEntity<>(companyService.updateNotification(notify,id),HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ROLE_COMPANY')")
+   // @PreAuthorize("hasRole('ROLE_COMPANY')")
 
     @GetMapping("/ppo/{companyName}")
     public ResponseEntity<List<PlacedStudentsDto>> getPPOList(@PathVariable String companyName){

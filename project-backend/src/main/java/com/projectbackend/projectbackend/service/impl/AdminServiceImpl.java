@@ -6,6 +6,7 @@ import com.projectbackend.projectbackend.payload.*;
 import com.projectbackend.projectbackend.repository.*;
 import com.projectbackend.projectbackend.service.AdminService;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,17 +16,20 @@ import java.util.List;
 public class AdminServiceImpl implements AdminService {
     private PlacedRepository placedRepository;
     private ModelMapper modelMapper;
+    private PasswordEncoder passwordEncoder;
     private AdminRepository adminRepository;
     private UnplacedRepository unplacedRepository;
     private UpcomingCompRepository upcomingCompRepository;
     private CurrentCompReposiotry currentCompReposiotry;
+
 
     private StudentRepository studentRepository;
     private CompanyListRepository companyListRepository;
     private AdminServiceImpl(PlacedRepository placedRepository, ModelMapper modelMapper, UnplacedRepository unplacedRepository,
                              UpcomingCompRepository upcomingCompRepository, CurrentCompReposiotry currentCompReposiotry,
                              StudentRepository studentRepository,CompanyListRepository companyListRepository,
-                             AdminRepository adminRepository){
+                             AdminRepository adminRepository,
+                             PasswordEncoder passwordEncoder){
         this.placedRepository=placedRepository;
         this.unplacedRepository=unplacedRepository;
         this.upcomingCompRepository=upcomingCompRepository;
@@ -34,6 +38,7 @@ public class AdminServiceImpl implements AdminService {
         this.studentRepository=studentRepository;
         this.companyListRepository=companyListRepository;
         this.adminRepository=adminRepository;
+        this.passwordEncoder=passwordEncoder;
 
     }
     @Override
@@ -54,8 +59,6 @@ public class AdminServiceImpl implements AdminService {
         UnplacedStudentsDto addedStudent=modelMapper.map(newStud, UnplacedStudentsDto.class);
 
         return  addedStudent;
-
-
     }
 
     @Override
@@ -64,9 +67,6 @@ public class AdminServiceImpl implements AdminService {
         CurrentCompany newComp=currentCompReposiotry.save(currentCompany);
         CurrentCompDto addedComp=modelMapper.map(newComp, CurrentCompDto.class);
         return addedComp;
-
-
-
     }
 
     @Override
@@ -163,6 +163,7 @@ public class AdminServiceImpl implements AdminService {
             s.setAlterEmail(studentRegisterDto.getAlterEmail());
         }
         if(studentRegisterDto.getGender() != null){
+            System.out.println(studentRegisterDto.getGender());
             s.setGender(studentRegisterDto.getGender());
         }
         if(studentRegisterDto.getAddress() != null){
@@ -280,7 +281,9 @@ public class AdminServiceImpl implements AdminService {
         if(adminRegisterDto.getEmail() !=null)
             admin.setEmail(adminRegisterDto.getEmail());
         if(adminRegisterDto.getPassword() !=null)
-            admin.setPassword(adminRegisterDto.getPassword());
+            admin.setPassword(passwordEncoder.encode(adminRegisterDto.getPassword()));
+        if(adminRegisterDto.getName() !=null)
+            admin.setName(adminRegisterDto.getName());
         adminRepository.save(admin);
         return "admin details updated";
     }
@@ -304,6 +307,7 @@ public class AdminServiceImpl implements AdminService {
         companyDetails.setEligible(companyDetailsDto.getEligible());
         companyDetails.setRounds(companyDetailsDto.getRounds());
         companyDetails.setPackageAmt(companyDetailsDto.getPackageAmt());
+        companyDetails.setProcess(companyDetailsDto.getProcess());
 
         companyListRepository.save(companyDetails);
         return "company details updated!";

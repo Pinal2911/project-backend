@@ -66,4 +66,9 @@ public class StudentController {
         return new ResponseEntity<>(studentService.getRoundDetails(),HttpStatus.OK);
     }
 
+    @GetMapping("/notifications")
+    public ResponseEntity<List<NotificationDto>> getNotifications(){
+        return new ResponseEntity<>(studentService.getNotifications(),HttpStatus.OK);
+    }
+
 }

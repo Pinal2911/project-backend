@@ -20,19 +20,22 @@ public class StudentServiceImpl implements StudentService {
     UnplacedRepository unplacedRepository;
     RoundDetailsRepository roundDetailsRepository;
     ModelMapper modelMapper;
+    NotificationRepository notificationRepository;
 
     public StudentServiceImpl(CurrentCompReposiotry currentCompReposiotry,
                               ModelMapper modelMapper,
                               UpcomingCompRepository upcomingCompRepository,
                               PlacedRepository placedRepository,
                               UnplacedRepository unplacedRepository,
-                              RoundDetailsRepository roundDetailsRepository) {
+                              RoundDetailsRepository roundDetailsRepository,
+                              NotificationRepository notificationRepository) {
         this.currentCompReposiotry = currentCompReposiotry;
         this.modelMapper=modelMapper;
         this.upcomingCompRepository=upcomingCompRepository;
         this.placedRepository=placedRepository;
         this.unplacedRepository=unplacedRepository;
         this.roundDetailsRepository=roundDetailsRepository;
+        this.notificationRepository=notificationRepository;
     }
 
     @Override
@@ -99,9 +102,22 @@ public class StudentServiceImpl implements StudentService {
         }
         return roundDetailsDtos;
     }
+    @Override
+    public List<NotificationDto> getNotifications() {
+        List<NotificationDto> notificationDtos=new ArrayList<>();
+        Iterable<Notifications> notifications=notificationRepository.findAll();
+        for(Notifications note:notifications){
+            notificationDtos.add(modelMapper.map(note, NotificationDto.class));
+        }
+        return notificationDtos;
+
+
+    }
 
     @Override
     public List<StudentRegisterDto> getStudentByID(Long id) {
         return null;
     }
+
+
 }
