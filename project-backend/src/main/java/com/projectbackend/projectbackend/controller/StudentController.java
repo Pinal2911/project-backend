@@ -4,6 +4,7 @@ import com.projectbackend.projectbackend.entity.*;
 import com.projectbackend.projectbackend.payload.*;
 import com.projectbackend.projectbackend.service.AdminService;
 
+import com.projectbackend.projectbackend.service.ApplicationService;
 import com.projectbackend.projectbackend.service.StudentService;
 import org.springframework.boot.util.LambdaSafe;
 import org.springframework.http.HttpStatus;
@@ -20,10 +21,11 @@ public class StudentController {
 
     public StudentService studentService;
     public AdminService adminService;
-//    public ApplicationService applicationService;
-    public StudentController(StudentService studentService,AdminService adminService){
+    public ApplicationService applicationService;
+    public StudentController(StudentService studentService,AdminService adminService,ApplicationService applicationService){
         this.studentService=studentService;
         this.adminService=adminService;
+        this.applicationService=applicationService;
 
     }
 
@@ -71,6 +73,13 @@ public class StudentController {
     @GetMapping("/notifications")
     public ResponseEntity<List<NotificationDto>> getNotifications(){
         return new ResponseEntity<>(studentService.getNotifications(),HttpStatus.OK);
+    }
+
+
+    @PostMapping("/apply")
+    public ResponseEntity<Void> applyToCompanies(@RequestBody ApplyRequest applyRequest){
+        applicationService.applyToCompanies(applyRequest.getSid(),applyRequest.getCid());
+        return ResponseEntity.ok().build();
     }
 
 

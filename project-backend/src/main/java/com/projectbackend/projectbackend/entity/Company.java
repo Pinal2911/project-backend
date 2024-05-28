@@ -25,6 +25,6 @@ public class Company {
     private String password;
     private String name;
 
-//    @OneToMany(mappedBy = "company")
-//    private List<Application> applications=new ArrayList<>();
+    @OneToMany(mappedBy = "company")
+   private List<Application> applications;
 }

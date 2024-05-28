@@ -65,7 +65,7 @@ public class Student {
     private boolean higherEducation;
     private boolean amcat;
 
-//    @OneToMany(mappedBy = "student")
-//    private List<Application> applications=new ArrayList<>();
+   @OneToMany(mappedBy = "student")
+    private List<Application> applications;
 
 }
