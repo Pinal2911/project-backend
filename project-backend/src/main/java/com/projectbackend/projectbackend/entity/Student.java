@@ -6,8 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 @Setter
@@ -18,6 +17,7 @@ import java.util.Set;
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private long id;
     private String password;
     private String fname;
@@ -64,5 +64,8 @@ public class Student {
     private String citizenship;
     private boolean higherEducation;
     private boolean amcat;
+
+//    @OneToMany(mappedBy = "student")
+//    private List<Application> applications=new ArrayList<>();
 
 }

@@ -1,9 +1,9 @@
 package com.projectbackend.projectbackend.controller;
 
-import com.projectbackend.projectbackend.entity.RoundDetails;
-import com.projectbackend.projectbackend.entity.UnplacedStudents;
+import com.projectbackend.projectbackend.entity.*;
 import com.projectbackend.projectbackend.payload.*;
 import com.projectbackend.projectbackend.service.AdminService;
+
 import com.projectbackend.projectbackend.service.StudentService;
 import org.springframework.boot.util.LambdaSafe;
 import org.springframework.http.HttpStatus;
@@ -20,9 +20,11 @@ public class StudentController {
 
     public StudentService studentService;
     public AdminService adminService;
+//    public ApplicationService applicationService;
     public StudentController(StudentService studentService,AdminService adminService){
         this.studentService=studentService;
         this.adminService=adminService;
+
     }
 
   //  @PreAuthorize("hasRole('ROLE_STUDENT')")
@@ -70,5 +72,14 @@ public class StudentController {
     public ResponseEntity<List<NotificationDto>> getNotifications(){
         return new ResponseEntity<>(studentService.getNotifications(),HttpStatus.OK);
     }
+
+
+
+
+//    @PutMapping("/applyToComp/{cid}/{sid}")
+//    public ResponseEntity<Application> apply(@PathVariable long cid,@PathVariable long sid){
+//        return new ResponseEntity<>(applicationService.applyToCompany(cid,sid),HttpStatus.OK);
+//    }
+
 
 }

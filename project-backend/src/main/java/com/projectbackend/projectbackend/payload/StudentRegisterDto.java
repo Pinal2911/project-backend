@@ -1,14 +1,19 @@
 package com.projectbackend.projectbackend.payload;
 
+import com.projectbackend.projectbackend.entity.Company;
 import lombok.*;
 
 import java.time.Year;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class StudentRegisterDto {
+
     private String fname;
     private String password;
     private String lname;
@@ -54,6 +59,7 @@ public class StudentRegisterDto {
     private String citizenship;
     private boolean higherEducation;
     private boolean amcat;
+
 
 
 }

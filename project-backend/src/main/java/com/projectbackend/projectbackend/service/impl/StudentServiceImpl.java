@@ -1,6 +1,7 @@
 package com.projectbackend.projectbackend.service.impl;
 
 import com.projectbackend.projectbackend.entity.*;
+import com.projectbackend.projectbackend.exception.ResourceNotFoundException;
 import com.projectbackend.projectbackend.payload.*;
 import com.projectbackend.projectbackend.repository.*;
 import com.projectbackend.projectbackend.service.StudentService;
@@ -10,11 +11,16 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class StudentServiceImpl implements StudentService {
 
     CurrentCompReposiotry currentCompReposiotry;
+
+    StudentRepository studentRepository;
+    CompanyRepository companyRepository;
     UpcomingCompRepository upcomingCompRepository;
     PlacedRepository placedRepository;
     UnplacedRepository unplacedRepository;
@@ -28,7 +34,8 @@ public class StudentServiceImpl implements StudentService {
                               PlacedRepository placedRepository,
                               UnplacedRepository unplacedRepository,
                               RoundDetailsRepository roundDetailsRepository,
-                              NotificationRepository notificationRepository) {
+                              NotificationRepository notificationRepository,StudentRepository studentRepository,
+                              CompanyRepository companyRepository) {
         this.currentCompReposiotry = currentCompReposiotry;
         this.modelMapper=modelMapper;
         this.upcomingCompRepository=upcomingCompRepository;
@@ -36,6 +43,9 @@ public class StudentServiceImpl implements StudentService {
         this.unplacedRepository=unplacedRepository;
         this.roundDetailsRepository=roundDetailsRepository;
         this.notificationRepository=notificationRepository;
+        this.studentRepository=studentRepository;
+        this.companyRepository=companyRepository;
+
     }
 
     @Override
@@ -113,6 +123,8 @@ public class StudentServiceImpl implements StudentService {
 
 
     }
+
+
 
     @Override
     public List<StudentRegisterDto> getStudentByID(Long id) {
